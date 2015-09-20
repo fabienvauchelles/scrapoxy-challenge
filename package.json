@@ -1,0 +1,42 @@
+{
+    "name": "scrapoxy-challenge",
+    "version": "1.0.0",
+    "main": "index.js",
+    "author": {
+        "name": "Fabien Vauchelles",
+        "email": "fabien@vauchelles.com",
+        "url": "http://fabien.vauchelles.com"
+    },
+    "description": "Scrapoxy challenge is anti-scrapers challenge",
+    "url": "https://github.com/fabienvauchelles/scrapoxy-challenge",
+    "homepage": "https://github.com/fabienvauchelles/scrapoxy-challenge",
+    "repository": "fabienvauchelles/scrapoxy-challenge",
+    "license": "MIT",
+    "keywords": [
+        "casperjs",
+        "crawl",
+        "crawling",
+        "http",
+        "scraper",
+        "scraping",
+        "anti-scraping",
+        "scrapoxy"
+    ],
+    "dependencies": {
+        "errorhandler": "~1.4.0",
+        "express": "~4.13.0",
+        "lodash": "~3.10.1",
+        "morgan": "~1.6.0",
+        "winston": "~1.0.0"
+    },
+    "engines": {
+        "node": ">=0.10.0"
+    },
+    "scripts": {
+        "start": "node server/index.js"
+    },
+    "preferGlobal": true,
+    "bin": {
+        "scrapoxy-challenge": "server/index.js"
+    }
+}

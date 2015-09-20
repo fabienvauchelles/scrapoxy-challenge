@@ -11,42 +11,41 @@ module.exports = middleware;
 ////////////
 
 function middleware(config) {
-    var counters = {};
+    var blacklistedIPs = {},
+        counters = {};
 
     return function middlewareImpl(req, res, next) {
-        var ip = req.ip;
+        var ip = req.ip,
+            now = new Date().getTime();
 
-        var counter = getOrCreateCounter(ip);
-        if (counter.getCount() > 0) {
-            winston.info('[antiscraping] blacklisted IP %s', ip);
+        var blacklistedIP = blacklistedIPs[ip];
+        if (blacklistedIP && blacklistedIP.start + blacklistedIP.delay > now) {
+            blacklistedIP.delay *= 2;
 
-            var delay = counter.incrDelay();
-
-            res.status(503).send('blacklisted IP ' + ip + ' for ' + delay + 'ms');
+            return res.status(503).send('blacklisted IP ' + ip + ' for ' + blacklistedIP.delay + 'ms (renew)');
         }
-        else {
-            counter.incrCounter();
-            counter.clearDelay();
 
-            next();
-        }
-    };
+        delete blacklistedIPs[ip];
 
-
-    ////////////
-
-    function getOrCreateCounter(ip) {
         var counter = counters[ip];
-        if (counter) {
-            return counter;
+        if (!counter) {
+            counter = new Counter(config.samplingDelay);
+            counters[ip] = counter;
         }
 
-        counter = new Counter(
-            config.startDelay,
-            config.decreaseDelay
-        );
-        counters[ip] = counter;
+        counter.incr();
 
-        return counter;
-    }
+        if (counter.getCount() > config.maxRequests) {
+            blacklistedIP = {
+                start: new Date().getTime(),
+                delay: config.blacklistStartDelay,
+            };
+
+            blacklistedIPs[ip] = blacklistedIP;
+
+            return res.status(503).send('blacklisted IP ' + ip + ' for ' + blacklistedIP.delay + 'ms (create)');
+        }
+
+        next();
+    };
 }

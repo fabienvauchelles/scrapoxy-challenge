@@ -8,36 +8,17 @@ module.exports = Counter;
 
 ////////////
 
-function Counter(startDelay) {
-    this._startDelay = startDelay;
-    this._delay = startDelay;
+function Counter(delay) {
+    this._delay = delay;
 
     this._buffer = [];
 }
 
 
-Counter.prototype.incrCounter = function incrCounterFn() {
+Counter.prototype.incr = function incrFn() {
     var timestamp = new Date().getTime();
 
     this._buffer.push(timestamp);
-};
-
-
-Counter.prototype.incrDelay = function incrDelayFn() {
-    this._delay = this._delay * 2;
-
-    winston.debug('[Counter] increment delay to %d', this._delay);
-
-    return this._delay;
-};
-
-
-Counter.prototype.clearDelay = function clearDelayFn() {
-    this._delay = this._startDelay;
-
-    winston.debug('[Counter] clear delay to %d', this._delay);
-
-    return this._delay;
 };
 
 

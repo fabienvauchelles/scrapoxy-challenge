@@ -27,7 +27,9 @@ app.use(errorHandler());
 // Add endpoint
 var count = 0;
 app.use(function(req, res) {
-    res.status(200).send('(' + count + ') You have reached the server');
+    var ip = req.ip;
+
+    res.status(200).send('(' + count + ') You have reached the server ' + ip);
 
     ++count;
 });

@@ -10,7 +10,7 @@ module.exports = _.merge({
     latency: 100,
 
     antiscraping: {
-        startDelay: 200,
+        startDelay: 500,
     },
 
 }, require('./config.secret'));

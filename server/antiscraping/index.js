@@ -14,7 +14,7 @@ function middleware(config) {
     var counters = {};
 
     return function middlewareImpl(req, res, next) {
-        var ip = req.connection.remoteAddress;
+        var ip = req.ip;
 
         var counter = getOrCreateCounter(ip);
         if (counter.getCount() > 0) {

@@ -1,8 +1,10 @@
-![Scrapoxy](https://raw.githubusercontent.com/fabienvauchelles/scrapoxy/master/docs/logo.png)
+# Challenge for Scrapoxy
+
+## Website
+
+Latest news are on [Scrapoxy.io](http://scrapoxy.io)!
 
 
-# What is Scrapoxy Challenge ?
+## Documentation
 
-Scrapoxy Challenge is a server to test scrapoxy.
-
-It's full of anti-scraping mechanisms.
+Documentation is on [ReadTheDocs](http://scrapoxy.readthedocs.org).
